@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Page</title>
+</head>
+<body class="bg-background-light text-text-light dark:bg-background-dark dark:text-text-dark min-h-screen">
+   
+  <!-- Header -->
+    <header class="flex justify-between items-center px-6 py-4 bg-surface-light dark:bg-surface-dark shadow">
+     
+<h1 class="font-logo text-4xl font-bold text-primary-light dark:text-primary-dark">
+  Blognest
+</h1>
+      <div class="flex items-center gap-4">
+         <!-- Back to Home Button -->
+  <a href="index.html">
+  <button
+      id="backHomeBtn"
+      class="bg-primary-light dark:bg-primary-dark text-white px-4 py-2 rounded hover:bg-primary-dark dark:hover:bg-primary-light transition"
+    >
+      Back to Home
+    </button>
+    </a>
+
+      <!-- Dark Mode Toggle -->
+    <button
+      id="toggleDarkMode"
+      class="bg-muted-light dark:bg-muted-dark text-text-light dark:text-text-dark px-3 py-2 rounded transition"
+      title="Toggle Dark Mode"
+    >
+      Dark Mode
+    </button>
+      </div>
+    </header>
+    <script type="module" src="/src/main.ts"></script> 
+</body>
+</html>
