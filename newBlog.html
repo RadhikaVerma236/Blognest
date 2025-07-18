@@ -6,7 +6,7 @@
     <title>New Blog</title>
 </head>
 <body class="bg-background-light text-text-light dark:bg-background-dark dark:text-text-dark min-h-screen">
-   <header class="flex justify-between items-center px-6 py-4 bg-surface-light dark:bg-surface-dark shadow">
+   <header class="flex justify-between items-center px-6 py-4 pb-6 bg-surface-light dark:bg-surface-dark shadow">
     <h1 class="font-logo text-4xl font-bold text-primary-light dark:text-primary-dark">
   Blognest
 </h1>
@@ -32,12 +32,10 @@
    
 
 
- <!--New Form-->  
-<div class="max-w-3xl mx-auto p-6 bg-white dark:bg-gray-800 shadow-lg rounded-xl">
   <h2 class="text-3xl font-bold text-center text-primary-light dark:text-primary-dark mb-8">
     📝 Write Your Blog
   </h2>
-
+<div class="max-w-2xl mx-auto bg-white dark:bg-surface-dark p-8 rounded-2xl shadow-lg">
   <form id="blogForm" class="space-y-6">
     <!-- Title -->
     <div>
@@ -121,15 +119,12 @@
     />
   </div>
  <!-- Buttons -->
-  <div class="flex justify-center space-x-4 mt-12 pt-4">
+  
     <button
-      type="button"
-      class="px-4 py-2 rounded-md bg-muted-light dark:bg-muted-dark 
-             text-text-light dark:text-text-dark 
-             hover:bg-muted-dark dark:hover:bg-muted-light 
-             transition"
+      type="reset"
+      class="px-6 py-2 mr-4 rounded-md bg-primary-light text-white hover:bg-primary-dark transition"
     >
-      Save Draft
+      Reset
     </button>
     <button
       type="submit"
@@ -137,9 +132,11 @@
     >
       Publish
     </button>
-  </div>
+  
   </form>
 </div>
+<!-- Toast Notification -->
+
 <footer class="mt-8 px-6 py-10 bg-muted-light dark:bg-muted-dark rounded-t-xl">
   <div class="text-center mb-6">
     <h2 class="text-xl font-bold text-primary-light dark:text-primary-dark">Blognest</h2>
