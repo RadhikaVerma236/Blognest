@@ -12,6 +12,13 @@ interface Blog {
   excerpt?: string;
 }
 
+const categoryFilter = document.getElementById('categoryFilter') as HTMLSelectElement;
+const filteredBlogsSection = document.getElementById('filteredBlogsSection')!;
+const filteredContainer = document.getElementById('filteredBlogs')!;
+const recentSection = document.getElementById('recentBlogsContainer')!;
+const olderSection = document.getElementById('olderBlogsContainer')!;
+const clearFilterBtn = document.getElementById('clearFilterBtn') as HTMLButtonElement;
+
 const RECENT_COUNT = 8;
 const RECENT_VISIBLE = 4;
 const OLDER_VISIBLE = 5;
@@ -121,3 +128,46 @@ loadMoreOlderBtn.addEventListener('click', showMoreOlder);
 // Initial rendering
 showMoreRecent();
 showMoreOlder();
+
+categoryFilter.addEventListener('change', () => {
+  const selectedCategory = categoryFilter.value.trim();
+
+  if (selectedCategory === '') {
+    // Show all sections again if nothing is selected
+    filteredBlogsSection.classList.add('hidden');
+    recentSection?.classList.remove('hidden');
+    olderSection?.classList.remove('hidden');
+    clearFilterBtn.classList.add('hidden'); 
+    return;
+  }
+
+  // Hide others
+  recentSection?.classList.add('hidden');
+  olderSection?.classList.add('hidden');
+  filteredBlogsSection.classList.remove('hidden');
+  clearFilterBtn.classList.remove('hidden'); 
+
+  renderFilteredBlogs(selectedCategory);
+});
+
+function renderFilteredBlogs(category: string) {
+  const filtered = blogs.filter(blog => blog.category === category);
+  filteredContainer.innerHTML = '';
+
+  if (filtered.length === 0) {
+    filteredContainer.innerHTML = `<p class="text-muted">No blogs found for this category.</p>`;
+    return;
+  }
+
+  for (const blog of filtered) {
+    const card = createCard(blog); // ✅ reuse the same card creation
+    filteredContainer.appendChild(card);
+  }
+}
+clearFilterBtn.addEventListener('click', () => {
+  categoryFilter.value = ''; // Reset dropdown
+  filteredBlogsSection.classList.add('hidden');
+  recentSection?.classList.remove('hidden');
+  olderSection?.classList.remove('hidden');
+  clearFilterBtn.classList.add('hidden'); // Hide button
+});

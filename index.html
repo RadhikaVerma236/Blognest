@@ -13,15 +13,36 @@
        <!-- <h1 class="text-3xl sm:text-4xl font-extrabold italic tracking-tight text-primary-light dark:text-primary-dark">
   Blognest
 </h1> -->
-<h1 class="font-logo text-3xl sm:text-4xl font-bold text-primary-light dark:text-primary-dark">
-  Blognest
-</h1>
+<h1 class="font-logo text-3xl sm:text-4xl font-bold text-primary-light dark:text-primary-dark">Blognest</h1>
+
       <div class="flex items-center gap-3 flex-wrap">
         <!--<a href="newBlog.html">-->
       <!-- <button
         id="createBlogBtn"
       class="bg-primary-light dark:bg-primary-dark text-white px-4 py-2 rounded hover:bg-teal-500 transition"
       > -->
+
+<!-- Category Filter Dropdown -->
+<div class="relative">
+  <select id="categoryFilter" class="px-3 py-2 rounded-md bg-surface-light dark:bg-surface-dark text-text-light dark:text-text-dark border border-muted-light dark:border-muted-dark">
+    <option value="">Filter by Category</option>
+    <option value="Wellness & Self-Care">Wellness & Self-Care</option>
+    <option value="Personal Growth">Personal Growth</option>
+    <option value="Home & Living">Home & Living</option>
+    <option value="Food & Nutrition">Food & Nutrition</option>
+    <option value="Fitness & Movement">Fitness & Movement</option>
+    <option value="Travel & Experiences">Travel & Experiences</option>
+    <option value="Work & Life Balance">Work & Life Balance</option>
+    <option value="Relationships & Social Life">Relationships & Social Life</option>
+    <option value="Style & Fashion">Style & Fashion</option>
+  </select>
+  <button id="clearFilterBtn"
+    class="hidden px-4 py-2 rounded bg-primary-light text-white dark:bg-primary-dark hover:opacity-90 transition"
+  >
+    Clear Filter
+  </button>
+</div>
+
       <button
       id="createBlogBtn"
   class="bg-primary-light dark:bg-primary-dark text-white px-4 py-2 rounded hover:bg-primary-dark dark:hover:bg-primary-light transition"
@@ -51,6 +72,13 @@
   Dive into stories that inspire calmness, creativity, and a balanced lifestyle. 🌿✨
   </p>
 </section>
+
+<!-- Filtered Blogs Container -->
+<section id="filteredBlogsSection" class="px-6 py-8 hidden">
+  <h2 class="text-2xl font-bold mb-4">Filtered Blogs</h2>
+  <div id="filteredBlogs" class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"></div>
+</section>
+
  <!--WORKINIG CODE-->
 <section id="recentBlogsContainer" class="mb-8 px-4 md:px-8 lg:px-16">
   <h2 class="text-2xl font-bold mb-4">Recent Posts</h2>
