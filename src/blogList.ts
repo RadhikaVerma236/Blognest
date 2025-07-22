@@ -171,3 +171,77 @@ clearFilterBtn.addEventListener('click', () => {
   olderSection?.classList.remove('hidden');
   clearFilterBtn.classList.add('hidden'); // Hide button
 });
+
+
+
+
+//Trial Code
+
+// const allBlogsContainer = document.getElementById('allBlogs')!;
+// const loadMoreAllBtn = document.getElementById('loadMoreAll')!;
+
+// let allIndex = 0;
+// const ALL_VISIBLE = 8;
+
+// function showMoreAll() {
+//   const next = blogs.slice(allIndex, allIndex + ALL_VISIBLE);
+
+//   next.forEach(blog => {
+//     allBlogsContainer.appendChild(createCard(blog)); // ✅ use createCard()
+//   });
+
+//   allIndex += ALL_VISIBLE;
+
+//   if (allIndex >= blogs.length) {
+//     loadMoreAllBtn.style.display = 'none';
+//   }
+// }
+
+// loadMoreAllBtn?.addEventListener('click', showMoreAll);
+// showMoreAll(); // Initial load
+
+
+const allBlogsContainer = document.getElementById('allBlogs')!;
+const loadMoreAllBtn = document.getElementById('loadMoreAll')!;
+const toggleAllViewBtn = document.getElementById('toggleAllView')!;
+
+let allIndex = 0;
+const ALL_VISIBLE = 8;
+let isListView = false; // 🔄 track view mode
+
+function renderAllBlogs(reset = false) {
+  if (reset) {
+    allBlogsContainer.innerHTML = '';
+    allIndex = 0;
+  }
+
+  const next = blogs.slice(allIndex, allIndex + ALL_VISIBLE);
+
+  next.forEach(blog => {
+    allBlogsContainer.appendChild(createCard(blog, isListView));
+  });
+
+  allIndex += ALL_VISIBLE;
+
+  if (allIndex >= blogs.length) {
+    loadMoreAllBtn.style.display = 'none';
+  } else {
+    loadMoreAllBtn.style.display = 'inline-block';
+  }
+
+  // Update container layout class
+  if (isListView) {
+    allBlogsContainer.className = 'space-y-4'; // Vertical stacking
+  } else {
+    allBlogsContainer.className = 'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6';
+  }
+}
+
+loadMoreAllBtn?.addEventListener('click', () => renderAllBlogs());
+toggleAllViewBtn?.addEventListener('click', () => {
+  isListView = !isListView;
+  toggleAllViewBtn.textContent = isListView ? 'Switch to Grid View' : 'Switch to List View';
+  renderAllBlogs(true); // Reset & rerender
+});
+
+renderAllBlogs();
