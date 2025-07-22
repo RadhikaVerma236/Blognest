@@ -77,6 +77,9 @@ blogForm?.addEventListener('submit',async (e) => {
     alert('Blog saved successfully!');
     blogForm.reset();
     coverImageInput.src = DEFAULT_IMAGE_PATH;
+
+    // ✅ Close modal
+    document.getElementById("blogModal")?.classList.add("hidden");
   };
     function toBase64(file:File): Promise<string>{
       return new Promise((resolve,reject)=>{

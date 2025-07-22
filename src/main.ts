@@ -1,16 +1,5 @@
 import './style.css';
-import { openBlogModal, closeBlogModal } from './modal';
 
-declare global {
-  interface Window {
-    openBlogModal: typeof openBlogModal;
-    closeBlogModal: typeof closeBlogModal;
-  }
-}
-
-// Make functions accessible globally in HTML
-window.openBlogModal = openBlogModal;
-window.closeBlogModal = closeBlogModal;
 
 const toggleDarkModeBtn = document.getElementById("toggleDarkMode");
 

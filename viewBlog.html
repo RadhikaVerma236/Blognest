@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Page</title>
+</head>
+<body class="bg-background-light text-text-light dark:bg-background-dark dark:text-text-dark min-h-screen">
+   
+  <!-- Header -->
+    <header class="flex justify-between items-center px-6 py-4 bg-surface-light dark:bg-surface-dark shadow">
+     
+<h1 class="font-logo text-4xl font-bold text-primary-light dark:text-primary-dark">
+  Blognest
+</h1>
+      <div class="flex items-center gap-4">
+         <!-- Back to Home Button -->
+  <a href="index.html">
+  <button
+      id="backHomeBtn"
+      class="bg-primary-light dark:bg-primary-dark text-white px-4 py-2 rounded hover:bg-primary-dark dark:hover:bg-primary-light transition"
+    >
+      Back to Home
+    </button>
+    </a>
+
+      <!-- Dark Mode Toggle -->
+    <button
+      id="toggleDarkMode"
+      class="bg-muted-light dark:bg-muted-dark text-text-light dark:text-text-dark px-3 py-2 rounded transition"
+      title="Toggle Dark Mode"
+    >
+      Dark Mode
+    </button>
+      </div>
+    </header>
+
+    <!-- Blog Content -->
+    <main class="max-w-4xl mx-auto px-4 py-10">
+      <div id="blogDetails" class="flex flex-col gap-6"></div>
+    </main>
+    
+    <script type="module" src="/src/main.ts"></script> 
+    <!-- Script -->
+    <script>
+      const blogDetails = document.getElementById("blogDetails");
+      const blogId = new URLSearchParams(window.location.search).get("id");
+      const allBlogs = JSON.parse(localStorage.getItem("blogs") || "[]");
+      const blog = allBlogs.find((b) => b.id === blogId);
+
+      if (blog) {
+        blogDetails.innerHTML = `
+       
+          <div  class=" flex justify-center">
+  <img
+  width = 300px;
+  height = 300px;
+    src="${blog.imageBase || ''}"
+    alt="${blog.title}"
+    class=" object-cover rounded-xl shadow-md"
+  />
+</div>
+
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="px-3 py-1 text-sm bg-muted-light dark:bg-muted-dark text-primary-dark dark:text-primary-light rounded-full">
+              ${blog.category}
+            </span>
+            <span class="text-sm text-text-light dark:text-text-dark">
+              By <strong>${blog.author}</strong> • ${new Date(blog.createdAt).toLocaleDateString()}
+            </span>
+          </div>
+
+          <h2 class="text-3xl font-bold text-primary-light dark:text-primary-dark">${blog.title}</h2>
+
+          <article class="prose dark:prose-invert max-w-none text-text-light dark:text-text-dark">
+            ${blog.content}
+          </article>
+        `;
+      } else {
+        blogDetails.innerHTML = `<p class="text-red-500">Blog not found.</p>`;
+      }
+    </script>
+</body>
+</html>

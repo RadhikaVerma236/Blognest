@@ -7,18 +7,16 @@
   </head>
   <body class="bg-background-light text-text-light dark:bg-background-dark dark:text-text-dark min-h-screen">
   <!-- Header -->
-    <header class="flex justify-between items-center px-6 py-4 bg-surface-light dark:bg-surface-dark shadow">
-      <!-- <div class="flex items-center gap-3">
-    <img src="src/assets/logo.png" alt="Blognest Logo" class="h-10 w-20" />
-  </div> -->
+    <header class="flex flex-col sm:flex-row justify-between items-center gap-4 sm:gap-0 px-6 py-4 bg-surface-light dark:bg-surface-dark shadow">
+      
       <!-- <h1 class="text-2xl font-bold text-primary-light dark:text-primary-dark">Blognest</h1> -->
        <!-- <h1 class="text-3xl sm:text-4xl font-extrabold italic tracking-tight text-primary-light dark:text-primary-dark">
   Blognest
 </h1> -->
-<h1 class="font-logo text-4xl font-bold text-primary-light dark:text-primary-dark">
+<h1 class="font-logo text-3xl sm:text-4xl font-bold text-primary-light dark:text-primary-dark">
   Blognest
 </h1>
-      <div class="flex items-center gap-4">
+      <div class="flex items-center gap-3 flex-wrap">
         <!--<a href="newBlog.html">-->
       <!-- <button
         id="createBlogBtn"
@@ -42,8 +40,8 @@
     </button>
       </div>
     </header>
-
-    <section class="text-center py-16 px-4 bg-surface-light dark:bg-surface-dark transition-colors">
+<!--HERO SECTION-->
+  <section class="text-center py-16 px-4 bg-surface-light dark:bg-surface-dark transition-colors">
   <h2 class="text-4xl font-bold text-primary-light dark:text-primary-dark mb-4">
     Your Cozy Space for Mindful Stories
   </h2>
@@ -53,20 +51,29 @@
   Dive into stories that inspire calmness, creativity, and a balanced lifestyle. 🌿✨
   </p>
 </section>
-
-<section id="recentBlogsContainer" class="mb-8">
+ <!--WORKINIG CODE-->
+<section id="recentBlogsContainer" class="mb-8 px-4 md:px-8 lg:px-16">
   <h2 class="text-2xl font-bold mb-4">Recent Posts</h2>
-  <div id="recentBlogs" class="flex gap-4 overflow-x-auto pb-2 justify-center"></div>
+  <div id="recentBlogs" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
   <button id="loadMoreRecent" class="mt-4 text-primary-light dark:text-primary-dark underline">Load More</button>
 </section>
 
-<section id="olderBlogsContainer">
+<section id="olderBlogsContainer" class="px-4 sm:px-8 lg:px-16 max-w-6xl mx-auto">
   <h2 class="text-2xl font-bold mb-4">All Posts</h2>
   <div id="olderBlogs" class="space-y-4"></div>
   <button id="loadMoreOlder" class="mt-4 text-primary-light dark:text-primary-dark underline">Load More</button>
 </section>
 
+<!-- <section class="px-4 md:px-8 lg:px-16 py-8 max-w-7xl mx-auto">
+    <div class="flex justify-between items-center mb-6">
+      <h2 class="text-2xl font-bold text-primary-light dark:text-primary-dark">📚 All Blogs</h2>
+      <button id="toggleViewBtn" class="px-4 py-2 rounded-md bg-primary-light text-white hover:bg-primary-dark transition">Toggle View</button>
+    </div>
 
+    <div id="blogContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 transition-all"></div>
+  </section> -->
+
+ 
 <!-- <section class="px-4 md:px-8 lg:px-16 py-8 max-w-7xl mx-auto">
   <div class="flex justify-between items-center mb-6">
     <h2 class="text-2xl font-bold text-primary-light dark:text-primary-dark">📚 All Blogs</h2>
@@ -198,6 +205,7 @@ Blog Cards Container
 
 <script type="module" src="/src/main.ts"></script>
 <script type="module" src="/src/blogList.ts"></script>
+
 <script>
 //modal logic
 const modal = document.getElementById("blogModal");
