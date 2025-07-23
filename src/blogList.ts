@@ -1,6 +1,5 @@
 import { getBlogsFromLocalStorage } from '../createBlog';
 
-
 interface Blog {
   id: string;
   title: string;
@@ -13,30 +12,13 @@ interface Blog {
 }
 
 const categoryFilter = document.getElementById('categoryFilter') as HTMLSelectElement;
-const filteredBlogsSection = document.getElementById('filteredBlogsSection')!;
-const filteredContainer = document.getElementById('filteredBlogs')!;
-const recentSection = document.getElementById('recentBlogsContainer')!;
-const olderSection = document.getElementById('olderBlogsContainer')!;
 const clearFilterBtn = document.getElementById('clearFilterBtn') as HTMLButtonElement;
-
-const RECENT_COUNT = 8;
-const RECENT_VISIBLE = 4;
-const OLDER_VISIBLE = 5;
-
-const recentContainer = document.getElementById('recentBlogs')!;
-const olderContainer = document.getElementById('olderBlogs')!;
-const loadMoreRecentBtn = document.getElementById('loadMoreRecent')!;
-const loadMoreOlderBtn = document.getElementById('loadMoreOlder')!;
+const blogContainer = document.getElementById('allBlogs')!; 
 
 const blogs: Blog[] = getBlogsFromLocalStorage().sort(
   (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
 );
-
-const recentBlogs = blogs.slice(0, RECENT_COUNT);
-const olderBlogs = blogs.slice(RECENT_COUNT);
-
-let recentIndex = 0;
-let olderIndex = 0;
+let currentBlogs: Blog[] = blogs; // holds filtered or all
 
 function createCard(blog:Blog, horizontal=false){
     const card = document.createElement('div');
@@ -53,8 +35,6 @@ function createCard(blog:Blog, horizontal=false){
 // const imageSection = `<img src="${imageSrc}" alt="${blog.title}" class="w-full h-40 object-cover rounded mb-3">`;
 
 const imageSection = horizontal
-  
-
   ? `<div class="w-1/3 max-w-[200px] h-40">
        <img src="${imageSrc}" alt="${blog.title}" class="w-full h-full object-cover rounded-md">
      </div>`
@@ -104,102 +84,47 @@ if (horizontal) {
    card.addEventListener('click', () => {
     window.location.href = `viewBlog.html?id=${blog.id}`;
   });
-
-  return card;
+return card;
 }
-
-function showMoreRecent(){
-    const next=recentBlogs.slice(recentIndex, recentIndex + RECENT_VISIBLE);
-    next.forEach(blog=>recentContainer.appendChild(createCard(blog)));
-    recentIndex +=RECENT_VISIBLE;
-    if(recentIndex>=recentBlogs.length) loadMoreRecentBtn.style.display='none';
-}
-
-function showMoreOlder(){
-    const next=olderBlogs.slice(olderIndex, olderIndex + OLDER_VISIBLE);
-    next.forEach(blog=>olderContainer.appendChild(createCard(blog, true)));
-    olderIndex += OLDER_VISIBLE;
-    if(olderIndex >= olderBlogs.length) loadMoreOlderBtn.style.display='none';
-}
-
-loadMoreRecentBtn.addEventListener('click', showMoreRecent);
-loadMoreOlderBtn.addEventListener('click', showMoreOlder);
-
-// Initial rendering
-showMoreRecent();
-showMoreOlder();
 
 categoryFilter.addEventListener('change', () => {
   const selectedCategory = categoryFilter.value.trim();
 
   if (selectedCategory === '') {
-    // Show all sections again if nothing is selected
-    filteredBlogsSection.classList.add('hidden');
-    recentSection?.classList.remove('hidden');
-    olderSection?.classList.remove('hidden');
+    renderAllBlogs();
     clearFilterBtn.classList.add('hidden'); 
     return;
   }
 
-  // Hide others
-  recentSection?.classList.add('hidden');
-  olderSection?.classList.add('hidden');
-  filteredBlogsSection.classList.remove('hidden');
+  
   clearFilterBtn.classList.remove('hidden'); 
-
-  renderFilteredBlogs(selectedCategory);
+renderFilteredBlogs(selectedCategory);
 });
 
 function renderFilteredBlogs(category: string) {
   const filtered = blogs.filter(blog => blog.category === category);
-  filteredContainer.innerHTML = '';
+  currentBlogs=filtered;
+  allIndex=0;
+  allBlogsContainer.innerHTML = '';
 
   if (filtered.length === 0) {
-    filteredContainer.innerHTML = `<p class="text-muted">No blogs found for this category.</p>`;
+    allBlogsContainer.innerHTML = `<p class="text-muted">No blogs found for this category.</p>`;
+    loadMoreAllBtn.style.display = 'none'; 
     return;
   }
 
   for (const blog of filtered) {
     const card = createCard(blog); // ✅ reuse the same card creation
-    filteredContainer.appendChild(card);
+    blogContainer.appendChild(card);
   }
 }
+
 clearFilterBtn.addEventListener('click', () => {
-  categoryFilter.value = ''; // Reset dropdown
-  filteredBlogsSection.classList.add('hidden');
-  recentSection?.classList.remove('hidden');
-  olderSection?.classList.remove('hidden');
-  clearFilterBtn.classList.add('hidden'); // Hide button
+  categoryFilter.value = '';
+  currentBlogs = blogs;
+  renderAllBlogs(true); // reset to all
+  clearFilterBtn.classList.add('hidden');
 });
-
-
-
-
-//Trial Code
-
-// const allBlogsContainer = document.getElementById('allBlogs')!;
-// const loadMoreAllBtn = document.getElementById('loadMoreAll')!;
-
-// let allIndex = 0;
-// const ALL_VISIBLE = 8;
-
-// function showMoreAll() {
-//   const next = blogs.slice(allIndex, allIndex + ALL_VISIBLE);
-
-//   next.forEach(blog => {
-//     allBlogsContainer.appendChild(createCard(blog)); // ✅ use createCard()
-//   });
-
-//   allIndex += ALL_VISIBLE;
-
-//   if (allIndex >= blogs.length) {
-//     loadMoreAllBtn.style.display = 'none';
-//   }
-// }
-
-// loadMoreAllBtn?.addEventListener('click', showMoreAll);
-// showMoreAll(); // Initial load
-
 
 const allBlogsContainer = document.getElementById('allBlogs')!;
 const loadMoreAllBtn = document.getElementById('loadMoreAll')!;
@@ -215,7 +140,7 @@ function renderAllBlogs(reset = false) {
     allIndex = 0;
   }
 
-  const next = blogs.slice(allIndex, allIndex + ALL_VISIBLE);
+  const next = currentBlogs.slice(allIndex, allIndex + ALL_VISIBLE);
 
   next.forEach(blog => {
     allBlogsContainer.appendChild(createCard(blog, isListView));
@@ -223,7 +148,7 @@ function renderAllBlogs(reset = false) {
 
   allIndex += ALL_VISIBLE;
 
-  if (allIndex >= blogs.length) {
+  if (allIndex >= currentBlogs.length) {
     loadMoreAllBtn.style.display = 'none';
   } else {
     loadMoreAllBtn.style.display = 'inline-block';
