@@ -107,16 +107,29 @@ function renderFilteredBlogs(category: string) {
   allIndex=0;
   allBlogsContainer.innerHTML = '';
 
+  // Filter heading logic
+  const filterHeadingWrapper = document.getElementById('filterHeadingWrapper')!;
+  const filterHeading = document.getElementById('filterHeading')!;
+
   if (filtered.length === 0) {
     allBlogsContainer.innerHTML = `<p class="text-muted">No blogs found for this category.</p>`;
     loadMoreAllBtn.style.display = 'none'; 
+    filterHeading.textContent = `No posts found for: ${category}`;
+    filterHeadingWrapper.classList.remove('hidden');
     return;
   }
+ filterHeading.textContent = `Showing posts for: ${category}`;
+  filterHeadingWrapper.classList.remove('hidden');
+  loadMoreAllBtn.style.display = 'block';
+  // for (const blog of filtered) {
+  //   const card = createCard(blog); // ✅ reuse the same card creation
+  //   blogContainer.appendChild(card);
+  // }
+  // Render only first set (e.g., 8 blogs)
+  renderAllBlogs(true); // use your existing paginated render logic
 
-  for (const blog of filtered) {
-    const card = createCard(blog); // ✅ reuse the same card creation
-    blogContainer.appendChild(card);
-  }
+  // Toggle Load More visibility
+  loadMoreAllBtn.style.display = filtered.length > ALL_VISIBLE ? 'inline-block' : 'none';
 }
 
 clearFilterBtn.addEventListener('click', () => {
@@ -124,6 +137,9 @@ clearFilterBtn.addEventListener('click', () => {
   currentBlogs = blogs;
   renderAllBlogs(true); // reset to all
   clearFilterBtn.classList.add('hidden');
+  // Hide the filter heading when filter is cleared
+  const filterHeadingWrapper = document.getElementById('filterHeadingWrapper')!;
+  filterHeadingWrapper.classList.add('hidden');
 });
 
 const allBlogsContainer = document.getElementById('allBlogs')!;

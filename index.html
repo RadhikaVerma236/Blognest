@@ -67,17 +67,26 @@
 <!--Trial Code-->
 
 <section id="allBlogsContainer" class="mb-8 px-4 md:px-8 lg:px-16 max-w-screen-xl mx-auto">
-  <div class="text-center mt-12 mb-8">
+  <div class="text-center mt-12 mb-4">
     <h2 class="text-3xl font-extrabold text-primary-light dark:text-primary-dark inline-block relative">
       All Posts
     </h2>
   </div>
- <!-- Toggle Button -->
-  <div class="flex justify-end mb-4">
-    <button id="toggleAllView" class="px-4 py-2 text-sm bg-primary-light dark:bg-primary-dark text-white rounded hover:opacity-90 transition">
-      Switch to List View
-    </button>
+ 
+  <!-- New Flex Wrapper -->
+<div class="flex flex-col md:flex-row justify-between items-center mb-6 gap-2">
+  <!-- Filtered Heading -->
+  <div id="filterHeadingWrapper" class="hidden md:block">
+    <h3 id="filterHeading" class="text-lg font-semibold text-text-light dark:text-text-dark">
+      <!-- Dynamic text inserted here -->
+    </h3>
   </div>
+
+  <!-- Toggle View Button -->
+  <button id="toggleAllView" class="px-4 py-2 text-sm bg-primary-light dark:bg-primary-dark text-white rounded hover:opacity-90 transition">
+    Switch to List View
+  </button>
+</div>
    <!-- Grid of Cards -->
   <div id="allBlogs" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
 
